@@ -13,10 +13,6 @@ int prevClick = -1;
 int prevLightUp = 0;
 int roundNumber = 1;
 
-//Buttons 4 and 8 on for block1
-//Buttons 3, 5, 7, 9 on for block2
-//Buttons 2-9 on for block3
-//320
 void setup(){
   String id = showInputDialog("Please enter a number ID");
   userNumber = Integer.parseInt(id);
@@ -84,7 +80,6 @@ int whichButton()  {
       }
      }
      else{
-   //    println("Outside");
        return 0;
      }
    }
@@ -116,7 +111,6 @@ int whichButton()  {
       }
      }
      else{
-   //    println("Outside");
        return 0;
      }
    }
@@ -130,7 +124,6 @@ double distanceBetween(){
   } else {
     tensPlacePrev++; 
   }
- // println(tensPlacePrev + ", " + onesPlacePrev);
   int tensPlaceCurr = randomValue / 5;
   int onesPlaceCurr = randomValue % 5;
   if(onesPlaceCurr == 0){
@@ -139,7 +132,6 @@ double distanceBetween(){
   else {
     tensPlaceCurr++; 
   }
-    //println(tensPlaceCurr + ", " + onesPlaceCurr);
 
   
   int xPrev = tensPlacePrev * 40;
@@ -170,24 +162,22 @@ void lightUp(int value){
 
 void mouseClicked(){
     prevClick = whichButton();
-    //println(prevClick);
     if(!start){
        if(prevClick == randomValue){
-     trialCounter++;
+         trialCounter++;
           prevLightUp = randomValue;
-     randomValue = (int)(random(25)) + 1;  
-     long currentTime = millis();
-     elapsedTime = currentTime - timeAtLastClick;
-     timeAtLastClick = currentTime;
-     if(roundNumber == 2 || roundNumber == 4){
-       println(userNumber + "\t" + trialCounter + "\t" + conditionNumber + "\t" + elapsedTime + "\t" + errorCounter + "\t" + targetDistance);
+         randomValue = (int)(random(25)) + 1;  
+         long currentTime = millis();
+         elapsedTime = currentTime - timeAtLastClick;
+         timeAtLastClick = currentTime;
+         if((roundNumber == 2 || roundNumber == 4) && trialCounter > 0){
+           println(userNumber + "\t" + trialCounter + "\t" + conditionNumber + "\t" + elapsedTime + "\t" + errorCounter + "\t" + targetDistance);
+         }
+         targetDistance = distanceBetween();
+         errorCounter = 0;  
      }
-     targetDistance = distanceBetween();
-     errorCounter = 0;  
- }
-   else if(prevClick != 0 && prevClick != randomValue){
+   else if(/*prevClick != 0 && */prevClick != randomValue){
      errorCounter++;
-     //delay(120);
    }
    if(trialCounter == 20){
       start = false;
@@ -212,9 +202,8 @@ void mouseClicked(){
      else if(roundNumber == 3 && conditionNumber == 0){
        conditionNumber = 1;
      }
-      trialCounter = 0;
+      trialCounter = -1;
    }
-   //delay(120);
    prevClick = -1;
     }
 }
